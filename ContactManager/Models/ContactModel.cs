@@ -14,8 +14,27 @@ namespace ContactManager.Models
         internal string Surname { get; set; }
         internal DateTime DateOfBirth { get; set; }
         internal char Sex { get; set; }
-        List<string> PhoneNumber { get; set; }
+        internal string PhoneNumber { get; set; }
+        List<string> PhoneNumbers { get; set; }
 
-
+        internal ContactModel()
+        { }
+        internal ContactModel(string name, string surname, DateTime dateOfBirth, char sex, string phoneNumber)
+        {
+            Name = name;
+            Surname = surname;
+            DateOfBirth = dateOfBirth;
+            Sex = sex;
+            PhoneNumber = phoneNumber;
+        }
+        internal ContactModel(int id,string name, string surname, DateTime dateOfBirth, char sex, string phoneNumber)
+        {
+            Id = id;
+            Name = name;
+            Surname = surname;
+            DateOfBirth = dateOfBirth;
+            Sex = sex;
+            PhoneNumber = phoneNumber;
+        }
     }
 }

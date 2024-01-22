@@ -17,13 +17,14 @@ namespace ContactManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             using (FrmLogin loginForm = new FrmLogin())
-            {             
-                if (loginForm.ShowDialog() == DialogResult.OK )
+            {
+                if (loginForm.ShowDialog() == DialogResult.OK)
                     Application.Run(new FrmContactList());
                 else
                     MessageBox.Show("Authentication failed!", "Error");
-            }           
+            }
         }
     }
 }
