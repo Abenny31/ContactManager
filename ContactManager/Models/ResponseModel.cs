@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace ContactManager.Models
 {
-    internal class ResponseModel
+    public class ResponseModel
     {
-        bool isError { get; set; }
-        string Message { get;set; }
+        public bool isError { get; set; }
+        public string Message { get;set; }
 
+        public ResponseModel (bool isError, string message)
+        {
+            this.isError = isError;
+            Message = message;
+        }
     }
 }

@@ -5,9 +5,14 @@ using System.Threading.Tasks;
 
 namespace ContactManager.Data
 {
-    internal class DatabaseManager : IDataManager
+    public class DatabaseManager : IDataManager
     {
-        public Task<ResponseModel> DeleteDataAsync(ContactModel contact)
+        public LoginModel CheckUser(string userName, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ResponseModel> DeleteDataAsync(ContactModel contact)
         {
             throw new System.NotImplementedException();
         }
@@ -21,12 +26,12 @@ namespace ContactManager.Data
             };
         }
 
-        public Task<ResponseModel> ModifyDataAsync(ContactModel contact)
+        public async Task<ResponseModel> ModifyDataAsync(ContactModel contact)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<ResponseModel> SaveDataAsync(ContactModel contact)
+        public async Task<ResponseModel> SaveDataAsync(ContactModel contact)
         {
             throw new System.NotImplementedException();
         }

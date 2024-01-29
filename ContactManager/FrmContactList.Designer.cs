@@ -35,16 +35,20 @@
             this.DateOfBirth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PhoneNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.contactModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnAddNew = new System.Windows.Forms.Button();
             this.btnEditContact = new System.Windows.Forms.Button();
             this.btnDeleteContact = new System.Windows.Forms.Button();
+            this.contactModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.contactModelBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grdContactList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.contactModelBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contactModelBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // grdContactList
             // 
+            this.grdContactList.AllowUserToAddRows = false;
+            this.grdContactList.AllowUserToDeleteRows = false;
             this.grdContactList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdContactList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ContactName,
@@ -52,45 +56,59 @@
             this.DateOfBirth,
             this.Sex,
             this.PhoneNumber});
-            this.grdContactList.Location = new System.Drawing.Point(32, 85);
+            this.grdContactList.Location = new System.Drawing.Point(43, 105);
+            this.grdContactList.Margin = new System.Windows.Forms.Padding(4);
             this.grdContactList.Name = "grdContactList";
-            this.grdContactList.Size = new System.Drawing.Size(642, 308);
+            this.grdContactList.RowHeadersWidth = 51;
+            this.grdContactList.Size = new System.Drawing.Size(856, 379);
             this.grdContactList.TabIndex = 0;
             // 
             // ContactName
             // 
+            this.ContactName.DataPropertyName = "Name";
             this.ContactName.HeaderText = "Name";
+            this.ContactName.MinimumWidth = 6;
             this.ContactName.Name = "ContactName";
+            this.ContactName.Width = 125;
             // 
             // Surname
             // 
+            this.Surname.DataPropertyName = "Surname";
             this.Surname.HeaderText = "Surname";
+            this.Surname.MinimumWidth = 6;
             this.Surname.Name = "Surname";
+            this.Surname.Width = 125;
             // 
             // DateOfBirth
             // 
+            this.DateOfBirth.DataPropertyName = "DateOfBirth";
             this.DateOfBirth.HeaderText = "Date of Birth";
+            this.DateOfBirth.MinimumWidth = 6;
             this.DateOfBirth.Name = "DateOfBirth";
+            this.DateOfBirth.Width = 125;
             // 
             // Sex
             // 
+            this.Sex.DataPropertyName = "Sex";
             this.Sex.HeaderText = "Sex";
+            this.Sex.MinimumWidth = 6;
             this.Sex.Name = "Sex";
+            this.Sex.Width = 125;
             // 
             // PhoneNumber
             // 
+            this.PhoneNumber.DataPropertyName = "PhoneNumber";
             this.PhoneNumber.HeaderText = "PhoneNumber";
+            this.PhoneNumber.MinimumWidth = 6;
             this.PhoneNumber.Name = "PhoneNumber";
-            // 
-            // contactModelBindingSource
-            // 
-            this.contactModelBindingSource.DataSource = typeof(ContactManager.Models.ContactModel);
+            this.PhoneNumber.Width = 125;
             // 
             // btnAddNew
             // 
-            this.btnAddNew.Location = new System.Drawing.Point(32, 40);
+            this.btnAddNew.Location = new System.Drawing.Point(43, 49);
+            this.btnAddNew.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddNew.Name = "btnAddNew";
-            this.btnAddNew.Size = new System.Drawing.Size(149, 23);
+            this.btnAddNew.Size = new System.Drawing.Size(199, 28);
             this.btnAddNew.TabIndex = 1;
             this.btnAddNew.Text = "New Contact";
             this.btnAddNew.UseVisualStyleBackColor = true;
@@ -98,9 +116,10 @@
             // 
             // btnEditContact
             // 
-            this.btnEditContact.Location = new System.Drawing.Point(450, 40);
+            this.btnEditContact.Location = new System.Drawing.Point(600, 49);
+            this.btnEditContact.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditContact.Name = "btnEditContact";
-            this.btnEditContact.Size = new System.Drawing.Size(109, 23);
+            this.btnEditContact.Size = new System.Drawing.Size(145, 28);
             this.btnEditContact.TabIndex = 2;
             this.btnEditContact.Text = "Edit Contact";
             this.btnEditContact.UseVisualStyleBackColor = true;
@@ -108,29 +127,39 @@
             // 
             // btnDeleteContact
             // 
-            this.btnDeleteContact.Location = new System.Drawing.Point(565, 40);
+            this.btnDeleteContact.Location = new System.Drawing.Point(753, 49);
+            this.btnDeleteContact.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeleteContact.Name = "btnDeleteContact";
-            this.btnDeleteContact.Size = new System.Drawing.Size(109, 23);
+            this.btnDeleteContact.Size = new System.Drawing.Size(145, 28);
             this.btnDeleteContact.TabIndex = 3;
             this.btnDeleteContact.Text = "Delete Contact";
             this.btnDeleteContact.UseVisualStyleBackColor = true;
             this.btnDeleteContact.Click += new System.EventHandler(this.btnDeleteContact_Click);
             // 
+            // contactModelBindingSource
+            // 
+            this.contactModelBindingSource.DataSource = typeof(ContactManager.Models.ContactModel);
+            // 
+            // contactModelBindingSource1
+            // 
+            this.contactModelBindingSource1.DataSource = typeof(ContactManager.Models.ContactModel);
+            // 
             // FrmContactList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(701, 427);
+            this.ClientSize = new System.Drawing.Size(935, 526);
             this.Controls.Add(this.btnDeleteContact);
             this.Controls.Add(this.btnEditContact);
             this.Controls.Add(this.btnAddNew);
             this.Controls.Add(this.grdContactList);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FrmContactList";
             this.Text = "Contact List";
             this.Load += new System.EventHandler(this.FrmContactList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdContactList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.contactModelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.contactModelBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -139,13 +168,14 @@
 
         private System.Windows.Forms.DataGridView grdContactList;
         private System.Windows.Forms.BindingSource contactModelBindingSource;
+        private System.Windows.Forms.Button btnAddNew;
+        private System.Windows.Forms.Button btnEditContact;
+        private System.Windows.Forms.Button btnDeleteContact;
+        private System.Windows.Forms.BindingSource contactModelBindingSource1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ContactName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Surname;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateOfBirth;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sex;
         private System.Windows.Forms.DataGridViewTextBoxColumn PhoneNumber;
-        private System.Windows.Forms.Button btnAddNew;
-        private System.Windows.Forms.Button btnEditContact;
-        private System.Windows.Forms.Button btnDeleteContact;
     }
 }

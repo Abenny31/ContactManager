@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -47,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DM.cs" />
     <Compile Include="Data\DatabaseManager.cs" />
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="Data\IDataManager.cs" />
@@ -63,12 +67,24 @@
     <Compile Include="FrmLogin.Designer.cs">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Global.cs" />
-    <Compile Include="Models\ContactModel.cs" />
-    <Compile Include="Models\FrmModifyContact.cs">
+    <Compile Include="FrmMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Models\FrmModifyContact.Designer.cs">
+    <Compile Include="FrmMessageBox.Designer.cs">
+      <DependentUpon>FrmMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPhoneNumbers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPhoneNumbers.Designer.cs">
+      <DependentUpon>FrmPhoneNumbers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global.cs" />
+    <Compile Include="Models\ContactModel.cs" />
+    <Compile Include="FrmModifyContact.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmModifyContact.Designer.cs">
       <DependentUpon>FrmModifyContact.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
@@ -81,8 +97,14 @@
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Models\FrmModifyContact.resx">
+    <EmbeddedResource Include="FrmMessageBox.resx">
+      <DependentUpon>FrmMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmModifyContact.resx">
       <DependentUpon>FrmModifyContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPhoneNumbers.resx">
+      <DependentUpon>FrmPhoneNumbers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -93,7 +115,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\ContactManager.Models.ContactModel.datasource" />
+    <None Include="Properties\DataSources\ContactManager.Models.FrmModifyContact.datasource" />
+    <None Include="Properties\DataSources\ContactManager.Models.LoginModel.datasource" />
+    <None Include="Properties\DataSources\ContactManager.Models.ResponseModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -12,49 +12,77 @@ namespace ContactManager
     public partial class FrmContactList : Form
     {
         private List<ContactModel> _contactListLoad = new List<ContactModel>();
-        private DataManager _dataManager;
         private ContactModel _selectedContactModel;
+
         public FrmContactList()
         {
             InitializeComponent();
         }
-
+        public FrmContactList(DataManager dataManager)
+        {
+            InitializeComponent();
+        }
         private void FrmContactList_Load(object sender, EventArgs e)
         {
-            //TODO: Load config set default database manager.
-            _dataManager = new DataManager(new JsonDataManager());
-
-            GetContacts();
             
-           
+           GetContacts();
+
         }
 
-        private void FillGrid()
+        public void FillGrid()
         {
             grdContactList.DataSource = new BindingList<ContactModel>(_contactListLoad);
             grdContactList.Refresh();
         }
 
-        private async Task GetContacts()
+        public async Task GetContacts()
         {
-            _contactListLoad = await Task.Run(() => _dataManager.GetDataAsync());
+            _contactListLoad = await Task.Run(() => DM._dataManager.GetDataAsync());
             FillGrid();
         }
 
-        private void btnAddNew_Click(object sender, EventArgs e)
+        private async void btnAddNew_Click(object sender, EventArgs e)
         {
+            FrmModifyContact frm = new FrmModifyContact();
+            frm.ShowDialog();
+            if (!frm.isSaved)
+                return;
+
+             await GetContacts();
 
         }
 
-        private void btnEditContact_Click(object sender, EventArgs e)
+        private async void btnEditContact_Click(object sender, EventArgs e)
         {
+
+            ContactModel contact = GetContactFromRow();
+            FrmModifyContact frm = new FrmModifyContact(contact);
+            frm.ShowDialog();
+            if (!frm.isSaved)
+                return;
+
+            await GetContacts();
 
         }
 
-        private void btnDeleteContact_Click(object sender, EventArgs e)
+        private ContactModel GetContactFromRow()
         {
-            
+            ContactModel contact = new ContactModel();
+            DataGridViewRow selectedRow = grdContactList.CurrentRow;
 
+            contact = selectedRow?.DataBoundItem as ContactModel;
+
+            return contact;
+
+        }
+
+        private async void btnDeleteContact_Click(object sender, EventArgs e)
+        {
+            ContactModel contact = GetContactFromRow();
+            ResponseModel result = await DM._dataManager.DeleteDataAsync(contact);
+            new FrmMessageBox(result.Message).ShowDialog();
+
+            await GetContacts();
 
         }
 

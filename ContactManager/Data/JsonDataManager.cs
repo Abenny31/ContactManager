@@ -1,34 +1,126 @@
 ﻿using ContactManager.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ContactManager.Data
 {
-    internal class JsonDataManager : IDataManager
+    public class JsonDataManager : IDataManager
     {
-        public Task<ResponseModel> DeleteDataAsync(ContactModel contact)
+        public ResponseModel Response { get; set; }
+        public LoginModel CheckUser(string userName, string password)
         {
-            throw new NotImplementedException();
+            List<LoginModel> loginModels = new List<LoginModel>();
+            string jsonData = LoadJsonFromFile(Global.UserLocation);
+            loginModels = JsonConvert.DeserializeObject<List<LoginModel>>(jsonData);
+            return CheckUserPassword(userName, password, loginModels);
+        }
+
+        public async Task<ResponseModel> DeleteDataAsync(ContactModel contact)
+        {
+            try
+            {
+                List<ContactModel> list = await GetDataAsync();
+                list.RemoveAll(c => c.Id == contact.Id);
+                string updatedJsonData = JsonConvert.SerializeObject(list);
+                SaveJsonToFile(Global.JsonLocation, updatedJsonData);
+
+                return new ResponseModel(true, "Contact deleted successfully");
+            }
+            catch (Exception e)
+            {
+                return new ResponseModel(false, "Delete failed!");
+            }
         }
 
         public async Task<List<ContactModel>> GetDataAsync()
         {
-            return new List<ContactModel>
-            {
-                new ContactModel("Ante", "Benic", DateTime.Now, 'M',  "12string3243" ),
-                new ContactModel("Ante1", "Benic1", DateTime.Now, 'M', "12343543"),
-                new ContactModel("Ante2", "Benic2", DateTime.Now, 'M',"123243" )
-            };
+            List<ContactModel> list = new List<ContactModel>();
+            string jsonData = LoadJsonFromFile(Global.JsonLocation);
+            list = JsonConvert.DeserializeObject<List<ContactModel>>(jsonData);
+
+            return list;
         }
-        public Task<ResponseModel> ModifyDataAsync(ContactModel contact)
+        public async Task<ResponseModel> ModifyDataAsync(ContactModel contact)
         {
-            throw new NotImplementedException();
+            List<ContactModel> list = await GetDataAsync();
+
+            ContactModel existingContact = list.FirstOrDefault(c => c.Id == contact.Id);
+
+            if (existingContact != null)
+            {
+                existingContact.Name = contact.Name;
+                existingContact.Surname = contact.Surname;
+                existingContact.Sex = contact.Sex;
+                existingContact.DateOfBirth = contact.DateOfBirth;
+                existingContact.PhoneNumber = contact.PhoneNumber;
+
+                string updatedJsonData = JsonConvert.SerializeObject(list);
+                SaveJsonToFile(Global.JsonLocation, updatedJsonData);
+
+                return new ResponseModel(true, "Contact modified successfully");
+            }
+            else
+            {
+                return new ResponseModel(false, "Edit failed!");
+            }
         }
 
-        public Task<ResponseModel> SaveDataAsync(ContactModel contact)
+        private void SaveJsonToFile(string jsonLocation, string updatedJsonData)
         {
-            throw new NotImplementedException();
+            File.WriteAllText(jsonLocation, updatedJsonData);
         }
+
+        public async Task<ResponseModel> SaveDataAsync(ContactModel contact)
+        {
+            try
+            {
+                List<ContactModel> list = await GetDataAsync();
+                int lastId = list.Any() ? list.Max(c => c.Id) : 0;
+                contact.Id = lastId + 1;
+                list.Add(contact);
+                string updatedJsonData = JsonConvert.SerializeObject(list);
+                SaveJsonToFile(Global.JsonLocation, updatedJsonData);
+
+                return new ResponseModel(true, "Contact saved successfully");
+            }
+            catch (Exception e)
+            {
+                return new ResponseModel(false, "Save failed!");
+            }
+        }
+
+        private string LoadJsonFromFile(string filePath)
+        {
+
+            string jsonData = string.Empty;
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    jsonData = File.ReadAllText(filePath);
+                }
+                catch (Exception ex)
+                {
+                    jsonData = $"Error loading users from file: {ex.Message}";
+                }
+            }
+            else
+            {
+                jsonData = "User data file not found.";
+            }
+            return jsonData;
+        }
+        private LoginModel CheckUserPassword(string userName, string password, List<LoginModel> loginModels)
+        {
+            var user = loginModels.Find(u => u.UserName == userName && u.Password == password);
+            return user;
+        }
+
     }
 }
+

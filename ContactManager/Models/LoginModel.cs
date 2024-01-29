@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ContactManager.Models
 {
-    internal class LoginModel
+    public class LoginModel
     {
-        internal int Id { get; set; }
-        internal string UserName { get; set; }
-        internal string Password { get; set; }
-        internal DateTime CreateDate { get; set; }
-        internal DateTime LastLogin { get; set; }
+        public int Id { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public DateTime? LastLogin { get; set; }
 
         public LoginModel(string userName, string password, DateTime lastLogin)
         {

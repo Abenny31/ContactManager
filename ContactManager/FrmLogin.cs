@@ -1,4 +1,6 @@
-﻿using ContactManager.Models;
+﻿using ContactManager.Data;
+using ContactManager.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,14 +13,16 @@ using System.Windows.Forms;
 
 namespace ContactManager
 {
-    internal partial class FrmLogin : Form
+    public partial class FrmLogin : Form
     {
-        internal bool userAuthenticated = false;
-        internal LoginModel _loginModel;
+        public bool userAuthenticated = false;
+        public LoginModel _loginModel;
+        public DataManager _dataManager;
 
-        internal FrmLogin()
+        public FrmLogin(DataManager dm)
         {
             InitializeComponent();
+            _dataManager = dm;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -58,11 +62,21 @@ namespace ContactManager
 
         private bool CheckUser()
         {
+            userAuthenticated = CheckUserData(txtUserName.Text,txtPassword.Text); 
+
+
+            return userAuthenticated;
+        }
+
+        private bool CheckUserData(string txtUserName, string txtPassword)
+        {
+            _loginModel = _dataManager.CheckUser(txtUserName, txtPassword);
+
             if (_loginModel == null)
                 return false;
-            //TODO: connect to db or json and check user.
-            userAuthenticated = true; 
-            return true;
+            else
+                return true;
+
         }
     }
 }

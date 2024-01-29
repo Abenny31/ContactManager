@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ContactManager.Data
 {
-    internal interface IDataManager
+    public interface IDataManager
     {
         Task<List<ContactModel>> GetDataAsync();
 
@@ -13,6 +13,8 @@ namespace ContactManager.Data
         Task<ResponseModel> DeleteDataAsync(ContactModel contact);
 
         Task<ResponseModel> ModifyDataAsync(ContactModel contact);
+
+        LoginModel CheckUser(string userName,string password);
 
     }
 }
