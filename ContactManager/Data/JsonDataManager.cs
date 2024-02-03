@@ -12,13 +12,6 @@ namespace ContactManager.Data
     public class JsonDataManager : IDataManager
     {
         public ResponseModel Response { get; set; }
-        public LoginModel CheckUser(string userName, string password)
-        {
-            List<LoginModel> loginModels = new List<LoginModel>();
-            string jsonData = LoadJsonFromFile(Global.UserLocation);
-            loginModels = JsonConvert.DeserializeObject<List<LoginModel>>(jsonData);
-            return CheckUserPassword(userName, password, loginModels);
-        }
 
         public async Task<ResponseModel> DeleteDataAsync(ContactModel contact)
         {
@@ -115,12 +108,11 @@ namespace ContactManager.Data
             }
             return jsonData;
         }
-        private LoginModel CheckUserPassword(string userName, string password, List<LoginModel> loginModels)
-        {
-            var user = loginModels.Find(u => u.UserName == userName && u.Password == password);
-            return user;
-        }
 
+        public LoginModel CheckUser(string userName, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

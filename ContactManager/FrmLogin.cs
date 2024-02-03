@@ -17,12 +17,10 @@ namespace ContactManager
     {
         public bool userAuthenticated = false;
         public LoginModel _loginModel;
-        public DataManager _dataManager;
 
-        public FrmLogin(DataManager dm)
+        public FrmLogin()
         {
             InitializeComponent();
-            _dataManager = dm;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -62,7 +60,7 @@ namespace ContactManager
 
         private bool CheckUser()
         {
-            userAuthenticated = CheckUserData(txtUserName.Text,txtPassword.Text); 
+            userAuthenticated = CheckUserData(txtUserName.Text, txtPassword.Text);
 
 
             return userAuthenticated;
@@ -70,12 +68,10 @@ namespace ContactManager
 
         private bool CheckUserData(string txtUserName, string txtPassword)
         {
-            _loginModel = _dataManager.CheckUser(txtUserName, txtPassword);
-
-            if (_loginModel == null)
-                return false;
-            else
+            if (txtUserName == Global.user && txtPassword == Global.pass)
                 return true;
+            else
+                return false;
 
         }
     }

@@ -10,8 +10,6 @@ namespace ContactManager
 {
     public static class Program
     {
-        public static DataManager _dataManager;
-
         [STAThread]
         static void Main()
         {
@@ -20,14 +18,13 @@ namespace ContactManager
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new FrmContactList());
-            //using (FrmLogin loginForm = new FrmLogin(_dataManager))
-            //{
-            //    if (loginForm.ShowDialog() == DialogResult.OK)
-            //        Application.Run(new FrmContactList());
-            //    else
-            //        MessageBox.Show("Authentication failed!", "Error");
-            //}
+            using (FrmLogin loginForm = new FrmLogin())
+            {
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                    Application.Run(new FrmContactList());
+                else
+                    MessageBox.Show("Authentication failed!", "Error");
+            }
         }
 
         private static void SetDataManager()

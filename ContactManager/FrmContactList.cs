@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,14 +18,37 @@ namespace ContactManager
         public FrmContactList()
         {
             InitializeComponent();
+            CheckJsonPath();
         }
-        public FrmContactList(DataManager dataManager)
+
+        private void CheckJsonPath()
         {
-            InitializeComponent();
+            if (!File.Exists(Global.JsonLocation))
+            {
+                CreateJsonFile();
+            }
         }
+
+        private void CreateJsonFile()
+        {
+            try
+            {
+                string directoryPath = Path.GetDirectoryName(Global.JsonLocation);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+                using (File.Create(Global.JsonLocation)) { }
+
+            }
+            catch (Exception ex)
+            {
+                new FrmMessageBox(ex.Message).ShowDialog();
+            }
+        }
+
         private void FrmContactList_Load(object sender, EventArgs e)
         {
-            
            GetContacts();
 
         }
@@ -49,12 +73,10 @@ namespace ContactManager
                 return;
 
              await GetContacts();
-
         }
 
         private async void btnEditContact_Click(object sender, EventArgs e)
         {
-
             ContactModel contact = GetContactFromRow();
             FrmModifyContact frm = new FrmModifyContact(contact);
             frm.ShowDialog();
@@ -62,7 +84,6 @@ namespace ContactManager
                 return;
 
             await GetContacts();
-
         }
 
         private ContactModel GetContactFromRow()
