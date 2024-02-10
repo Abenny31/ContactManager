@@ -69,7 +69,6 @@ namespace ContactManager
             if (buttons == MessageBoxButtons.OK)
             {
                 btnOk.Visible = true;
-
             }
             else if (buttons == MessageBoxButtons.YesNo)
             {
@@ -77,7 +76,6 @@ namespace ContactManager
                 btnNo.Visible = true;
             }
             this.StartPosition = FormStartPosition.CenterParent;
-
         }
 
         public void SetMessage(string message)
@@ -89,7 +87,6 @@ namespace ContactManager
             btnNo.Visible = false;
             btnYes.Visible = false;
             btnOk.Visible = false;
-
         }
 
         private void FrmMsgConfirm_Load(object sender, EventArgs e)

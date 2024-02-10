@@ -7,14 +7,8 @@ namespace ContactManager.Data
     public interface IDataManager
     {
         Task<List<ContactModel>> GetDataAsync();
-
         Task<ResponseModel> SaveDataAsync(ContactModel contact);
-
         Task<ResponseModel> DeleteDataAsync(ContactModel contact);
-
         Task<ResponseModel> ModifyDataAsync(ContactModel contact);
-
-        LoginModel CheckUser(string userName,string password);
-
     }
 }

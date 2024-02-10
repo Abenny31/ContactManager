@@ -29,10 +29,7 @@ namespace ContactManager
 
         private static void SetDataManager()
         {
-            if (Global.UseDB)
-                DM._dataManager = new DataManager(new DatabaseManager());
-            else
-                DM._dataManager = new DataManager(new JsonDataManager());
+            DM._dataManager = new DataManager(new JsonDataManager());
         }
     }
 }

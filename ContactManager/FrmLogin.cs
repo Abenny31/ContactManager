@@ -30,39 +30,39 @@ namespace ContactManager
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            Login();
+        }
+        private void Login()
+        {
             this.Cursor.Equals(Cursors.WaitCursor);
             if (!string.IsNullOrWhiteSpace(txtUserName.Text) && !string.IsNullOrWhiteSpace(txtPassword.Text))
             {
                 _loginModel = new LoginModel(txtUserName.Text, txtPassword.Text, DateTime.Now);
                 AuthenticateLogin();
             }
-
             if (userAuthenticated)
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             this.Cursor.Equals(Cursors.Default);
-        }
 
+        }
         private void AuthenticateLogin()
         {
             SetLblMessage(CheckUser());
-
         }
 
         private void SetLblMessage(bool isSuccess)
         {
             lblMessage.Text = isSuccess ? "Success!" : "Login failed!";
             lblMessage.Visible = true;
-            lblPassword.Text = string.Empty;
+            txtPassword.Text = string.Empty;
         }
 
         private bool CheckUser()
         {
             userAuthenticated = CheckUserData(txtUserName.Text, txtPassword.Text);
-
-
             return userAuthenticated;
         }
 
@@ -72,7 +72,11 @@ namespace ContactManager
                 return true;
             else
                 return false;
-
         }
+        private void FrmLogin_Load(object sender, EventArgs e)
+        {
+            txtUserName.Focus();
+        }
+
     }
 }

@@ -9,28 +9,20 @@ namespace ContactManager.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public char Sex { get; set; }
+        public SexEnum Sex { get; set; }
         public string PhoneNumber { get; set; }
-        List<string> PhoneNumbers { get; set; }
+        public List<string> PhoneNumbers { get; set; } = new List<string>();
 
         public ContactModel()
-        { }
-        public ContactModel(string name, string surname, DateTime dateOfBirth, char sex, string phoneNumber)
-        {
-            Name = name;
-            Surname = surname;
-            DateOfBirth = dateOfBirth;
-            Sex = sex;
-            PhoneNumber = phoneNumber;
-        }
-        public ContactModel(int id,string name, string surname, DateTime dateOfBirth, char sex, string phoneNumber)
-        {
-            Id = id;
-            Name = name;
-            Surname = surname;
-            DateOfBirth = dateOfBirth;
-            Sex = sex;
-            PhoneNumber = phoneNumber;
-        }
+        { PhoneNumbers = new List<string>(); }
+
+    }
+
+    public enum SexEnum
+    { 
+        M='M',
+        W='W',
+        NotSpecified=0
+    
     }
 }

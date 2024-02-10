@@ -17,6 +17,7 @@ nupkg/
 # Fleet
 .fleet/
 
+
 # Code Rush
 .cr/
 
@@ -25,6 +26,7 @@ nupkg/
 *.user
 *.userosscache
 *.sln.docstates
+*.pfx
 
 # Build results
 [Dd]ebug/
@@ -41,3 +43,4 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+[Pp]ublish/

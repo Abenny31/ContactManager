@@ -42,6 +42,9 @@
             this.dtDob = new System.Windows.Forms.DateTimePicker();
             this.cbM = new System.Windows.Forms.CheckBox();
             this.cbW = new System.Windows.Forms.CheckBox();
+            this.panelNumbers = new System.Windows.Forms.Panel();
+            this.lblReqName = new System.Windows.Forms.Label();
+            this.lblReqPhone = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -101,13 +104,13 @@
             // 
             // btnPhoneNumber
             // 
-            this.btnPhoneNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.btnPhoneNumber.Location = new System.Drawing.Point(1, 231);
+            this.btnPhoneNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.btnPhoneNumber.Location = new System.Drawing.Point(53, 305);
             this.btnPhoneNumber.Margin = new System.Windows.Forms.Padding(4);
             this.btnPhoneNumber.Name = "btnPhoneNumber";
-            this.btnPhoneNumber.Size = new System.Drawing.Size(44, 39);
+            this.btnPhoneNumber.Size = new System.Drawing.Size(144, 69);
             this.btnPhoneNumber.TabIndex = 106;
-            this.btnPhoneNumber.Text = "+";
+            this.btnPhoneNumber.Text = "Addditional numbers ";
             this.btnPhoneNumber.UseVisualStyleBackColor = true;
             this.btnPhoneNumber.Click += new System.EventHandler(this.btnPhoneNumber_Click);
             // 
@@ -194,11 +197,45 @@
             this.cbW.Text = "Female";
             this.cbW.UseVisualStyleBackColor = false;
             // 
+            // panelNumbers
+            // 
+            this.panelNumbers.AutoScroll = true;
+            this.panelNumbers.BackColor = System.Drawing.SystemColors.Window;
+            this.panelNumbers.Location = new System.Drawing.Point(245, 291);
+            this.panelNumbers.Name = "panelNumbers";
+            this.panelNumbers.Size = new System.Drawing.Size(294, 131);
+            this.panelNumbers.TabIndex = 113;
+            // 
+            // lblReqName
+            // 
+            this.lblReqName.AutoSize = true;
+            this.lblReqName.ForeColor = System.Drawing.Color.Red;
+            this.lblReqName.Location = new System.Drawing.Point(242, 66);
+            this.lblReqName.Name = "lblReqName";
+            this.lblReqName.Size = new System.Drawing.Size(113, 16);
+            this.lblReqName.TabIndex = 114;
+            this.lblReqName.Text = "Name is required!";
+            this.lblReqName.Visible = false;
+            // 
+            // lblReqPhone
+            // 
+            this.lblReqPhone.AutoSize = true;
+            this.lblReqPhone.ForeColor = System.Drawing.Color.Red;
+            this.lblReqPhone.Location = new System.Drawing.Point(242, 272);
+            this.lblReqPhone.Name = "lblReqPhone";
+            this.lblReqPhone.Size = new System.Drawing.Size(150, 16);
+            this.lblReqPhone.TabIndex = 115;
+            this.lblReqPhone.Text = "Number format is wrong!";
+            this.lblReqPhone.Visible = false;
+            // 
             // FrmModifyContact
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(557, 540);
+            this.Controls.Add(this.lblReqPhone);
+            this.Controls.Add(this.lblReqName);
+            this.Controls.Add(this.panelNumbers);
             this.Controls.Add(this.cbW);
             this.Controls.Add(this.cbM);
             this.Controls.Add(this.dtDob);
@@ -216,6 +253,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmModifyContact";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FrmModifyContact";
             this.Load += new System.EventHandler(this.FrmModifyContact_Load);
@@ -240,5 +278,8 @@
         private System.Windows.Forms.DateTimePicker dtDob;
         private System.Windows.Forms.CheckBox cbM;
         private System.Windows.Forms.CheckBox cbW;
+        private System.Windows.Forms.Panel panelNumbers;
+        private System.Windows.Forms.Label lblReqName;
+        private System.Windows.Forms.Label lblReqPhone;
     }
 }

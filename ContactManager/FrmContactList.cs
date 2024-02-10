@@ -1,10 +1,9 @@
-﻿using ContactManager.Data;
-using ContactManager.Models;
+﻿using ContactManager.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,7 +12,6 @@ namespace ContactManager
     public partial class FrmContactList : Form
     {
         private List<ContactModel> _contactListLoad = new List<ContactModel>();
-        private ContactModel _selectedContactModel;
 
         public FrmContactList()
         {
@@ -41,16 +39,15 @@ namespace ContactManager
                 using (File.Create(Global.JsonLocation)) { }
 
             }
-            catch (Exception ex)
+            catch 
             {
-                new FrmMessageBox(ex.Message).ShowDialog();
+                new FrmMessageBox().Show();
             }
         }
 
         private void FrmContactList_Load(object sender, EventArgs e)
         {
-           GetContacts();
-
+            GetContacts();
         }
 
         public void FillGrid()
@@ -59,23 +56,23 @@ namespace ContactManager
             grdContactList.Refresh();
         }
 
-        public async Task GetContacts()
+        public async void GetContacts()
         {
             _contactListLoad = await Task.Run(() => DM._dataManager.GetDataAsync());
             FillGrid();
         }
 
-        private async void btnAddNew_Click(object sender, EventArgs e)
+        private  void btnAddNew_Click(object sender, EventArgs e)
         {
             FrmModifyContact frm = new FrmModifyContact();
             frm.ShowDialog();
             if (!frm.isSaved)
                 return;
 
-             await GetContacts();
+            GetContacts();
         }
 
-        private async void btnEditContact_Click(object sender, EventArgs e)
+        private  void btnEditContact_Click(object sender, EventArgs e)
         {
             ContactModel contact = GetContactFromRow();
             FrmModifyContact frm = new FrmModifyContact(contact);
@@ -83,7 +80,7 @@ namespace ContactManager
             if (!frm.isSaved)
                 return;
 
-            await GetContacts();
+            GetContacts();
         }
 
         private ContactModel GetContactFromRow()
@@ -91,10 +88,10 @@ namespace ContactManager
             ContactModel contact = new ContactModel();
             DataGridViewRow selectedRow = grdContactList.CurrentRow;
 
-            contact = selectedRow?.DataBoundItem as ContactModel;
+            int selectedId = (int)selectedRow.Cells["Id"].Value;
+            contact = _contactListLoad.FirstOrDefault(c => c.Id == selectedId);
 
             return contact;
-
         }
 
         private async void btnDeleteContact_Click(object sender, EventArgs e)
@@ -103,8 +100,7 @@ namespace ContactManager
             ResponseModel result = await DM._dataManager.DeleteDataAsync(contact);
             new FrmMessageBox(result.Message).ShowDialog();
 
-            await GetContacts();
-
+            GetContacts();
         }
 
     }
