@@ -22,7 +22,7 @@ namespace ContactManager.Data
 
                 return new ResponseModel(true, "Contact deleted successfully");
             }
-            catch 
+            catch
             {
                 return new ResponseModel(false, "Delete failed!");
             }
@@ -30,8 +30,9 @@ namespace ContactManager.Data
         public async Task<List<ContactModel>> GetDataAsync()
         {
             List<ContactModel> list = new List<ContactModel>();
-            string jsonData = await Task.Run(()=>LoadJsonFromFile(Global.JsonLocation));
-            list = JsonConvert.DeserializeObject<List<ContactModel>>(jsonData);
+            string jsonData = await Task.Run(() => LoadJsonFromFile(Global.JsonLocation));
+            if (jsonData != "" && jsonData != null)
+                list = JsonConvert.DeserializeObject<List<ContactModel>>(jsonData);
 
             return list;
         }
@@ -67,8 +68,8 @@ namespace ContactManager.Data
         public async Task<ResponseModel> SaveDataAsync(ContactModel contact)
         {
             try
-            {    
-                List<ContactModel> list =  await GetDataAsync();
+            {
+                List<ContactModel> list = await GetDataAsync();
                 list = list == null ? new List<ContactModel>() : list;
                 int lastId = list.Any() ? list.Max(c => c.Id) : 0;
                 contact.Id = lastId + 1;
@@ -78,7 +79,7 @@ namespace ContactManager.Data
 
                 return new ResponseModel(true, "Contact saved successfully");
             }
-            catch 
+            catch
             {
                 return new ResponseModel(false, "Save failed!");
             }
@@ -86,21 +87,16 @@ namespace ContactManager.Data
         private string LoadJsonFromFile(string filePath)
         {
             string jsonData = string.Empty;
-            if (File.Exists(filePath))
+
+            try
             {
-                try
-                {
-                    jsonData = File.ReadAllText(filePath);
-                }
-                catch (Exception ex)
-                {
-                    jsonData = $"Error loading users from file: {ex.Message}";
-                }
+                jsonData = File.ReadAllText(filePath);
             }
-            else
+            catch (Exception ex)
             {
-                jsonData = "User data file not found.";
+                jsonData = $"Error loading users from file: {ex.Message}";
             }
+
             return jsonData;
         }
     }

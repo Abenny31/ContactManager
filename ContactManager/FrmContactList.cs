@@ -74,7 +74,12 @@ namespace ContactManager
 
         private  void btnEditContact_Click(object sender, EventArgs e)
         {
-            ContactModel contact = GetContactFromRow();
+            (ContactModel contact, bool success) = GetContactFromRow();
+
+            if (!success)
+            {
+                return;
+            }
             FrmModifyContact frm = new FrmModifyContact(contact);
             frm.ShowDialog();
             if (!frm.isSaved)
@@ -83,20 +88,28 @@ namespace ContactManager
             GetContacts();
         }
 
-        private ContactModel GetContactFromRow()
+        private (ContactModel contact, bool success) GetContactFromRow()
         {
             ContactModel contact = new ContactModel();
             DataGridViewRow selectedRow = grdContactList.CurrentRow;
 
+            if (selectedRow == null)
+            {
+                new FrmMessageBox("No contact is selected!").ShowDialog();
+                return (contact, false);
+            }
+
             int selectedId = (int)selectedRow.Cells["Id"].Value;
             contact = _contactListLoad.FirstOrDefault(c => c.Id == selectedId);
 
-            return contact;
+            return (contact,true);
         }
 
         private async void btnDeleteContact_Click(object sender, EventArgs e)
         {
-            ContactModel contact = GetContactFromRow();
+            (ContactModel contact, bool success) = GetContactFromRow();
+            if (!success)
+                return;
             ResponseModel result = await DM._dataManager.DeleteDataAsync(contact);
             new FrmMessageBox(result.Message).ShowDialog();
 
