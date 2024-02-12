@@ -31,15 +31,17 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grdContactList = new System.Windows.Forms.DataGridView();
-            this.btnAddNew = new System.Windows.Forms.Button();
-            this.btnEditContact = new System.Windows.Forms.Button();
-            this.btnDeleteContact = new System.Windows.Forms.Button();
             this.ContactName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Surname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateOfBirth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PhoneNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAddNew = new System.Windows.Forms.Button();
+            this.btnEditContact = new System.Windows.Forms.Button();
+            this.btnDeleteContact = new System.Windows.Forms.Button();
+            this.pBar1 = new System.Windows.Forms.ProgressBar();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.contactModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.contactModelBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grdContactList)).BeginInit();
@@ -51,6 +53,8 @@
             // 
             this.grdContactList.AllowUserToAddRows = false;
             this.grdContactList.AllowUserToDeleteRows = false;
+            this.grdContactList.AllowUserToResizeColumns = false;
+            this.grdContactList.AllowUserToResizeRows = false;
             this.grdContactList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -81,47 +85,10 @@
             this.grdContactList.ReadOnly = true;
             this.grdContactList.RowHeadersVisible = false;
             this.grdContactList.RowHeadersWidth = 51;
+            this.grdContactList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.grdContactList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdContactList.Size = new System.Drawing.Size(856, 412);
             this.grdContactList.TabIndex = 0;
-            // 
-            // btnAddNew
-            // 
-            this.btnAddNew.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnAddNew.Location = new System.Drawing.Point(43, 49);
-            this.btnAddNew.Margin = new System.Windows.Forms.Padding(4);
-            this.btnAddNew.Name = "btnAddNew";
-            this.btnAddNew.Size = new System.Drawing.Size(199, 28);
-            this.btnAddNew.TabIndex = 1;
-            this.btnAddNew.Text = "New Contact";
-            this.btnAddNew.UseVisualStyleBackColor = false;
-            this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
-            // 
-            // btnEditContact
-            // 
-            this.btnEditContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditContact.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnEditContact.Location = new System.Drawing.Point(600, 49);
-            this.btnEditContact.Margin = new System.Windows.Forms.Padding(4);
-            this.btnEditContact.Name = "btnEditContact";
-            this.btnEditContact.Size = new System.Drawing.Size(145, 28);
-            this.btnEditContact.TabIndex = 2;
-            this.btnEditContact.Text = "Edit Contact";
-            this.btnEditContact.UseVisualStyleBackColor = false;
-            this.btnEditContact.Click += new System.EventHandler(this.btnEditContact_Click);
-            // 
-            // btnDeleteContact
-            // 
-            this.btnDeleteContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteContact.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnDeleteContact.Location = new System.Drawing.Point(753, 49);
-            this.btnDeleteContact.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDeleteContact.Name = "btnDeleteContact";
-            this.btnDeleteContact.Size = new System.Drawing.Size(145, 28);
-            this.btnDeleteContact.TabIndex = 3;
-            this.btnDeleteContact.Text = "Delete Contact";
-            this.btnDeleteContact.UseVisualStyleBackColor = false;
-            this.btnDeleteContact.Click += new System.EventHandler(this.btnDeleteContact_Click);
             // 
             // ContactName
             // 
@@ -172,6 +139,70 @@
             this.PhoneNumber.Name = "PhoneNumber";
             this.PhoneNumber.ReadOnly = true;
             // 
+            // btnAddNew
+            // 
+            this.btnAddNew.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnAddNew.Location = new System.Drawing.Point(43, 49);
+            this.btnAddNew.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAddNew.Name = "btnAddNew";
+            this.btnAddNew.Size = new System.Drawing.Size(199, 28);
+            this.btnAddNew.TabIndex = 1;
+            this.btnAddNew.Text = "New Contact";
+            this.btnAddNew.UseVisualStyleBackColor = false;
+            this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
+            // 
+            // btnEditContact
+            // 
+            this.btnEditContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditContact.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnEditContact.Location = new System.Drawing.Point(600, 49);
+            this.btnEditContact.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEditContact.Name = "btnEditContact";
+            this.btnEditContact.Size = new System.Drawing.Size(145, 28);
+            this.btnEditContact.TabIndex = 2;
+            this.btnEditContact.Text = "Edit Contact";
+            this.btnEditContact.UseVisualStyleBackColor = false;
+            this.btnEditContact.Click += new System.EventHandler(this.btnEditContact_Click);
+            // 
+            // btnDeleteContact
+            // 
+            this.btnDeleteContact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteContact.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnDeleteContact.Location = new System.Drawing.Point(753, 49);
+            this.btnDeleteContact.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDeleteContact.Name = "btnDeleteContact";
+            this.btnDeleteContact.Size = new System.Drawing.Size(145, 28);
+            this.btnDeleteContact.TabIndex = 3;
+            this.btnDeleteContact.Text = "Delete Contact";
+            this.btnDeleteContact.UseVisualStyleBackColor = false;
+            this.btnDeleteContact.Click += new System.EventHandler(this.btnDeleteContact_Click);
+            // 
+            // pBar1
+            // 
+            this.pBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pBar1.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.pBar1.Location = new System.Drawing.Point(138, 176);
+            this.pBar1.MaximumSize = new System.Drawing.Size(0, 23);
+            this.pBar1.MinimumSize = new System.Drawing.Size(644, 23);
+            this.pBar1.Name = "pBar1";
+            this.pBar1.Size = new System.Drawing.Size(644, 23);
+            this.pBar1.TabIndex = 4;
+            this.pBar1.Visible = false;
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnRefresh.Location = new System.Drawing.Point(250, 49);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(78, 28);
+            this.btnRefresh.TabIndex = 5;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = false;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
             // contactModelBindingSource
             // 
             this.contactModelBindingSource.DataSource = typeof(ContactManager.Models.ContactModel);
@@ -186,6 +217,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(935, 526);
+            this.Controls.Add(this.btnRefresh);
+            this.Controls.Add(this.pBar1);
             this.Controls.Add(this.btnDeleteContact);
             this.Controls.Add(this.btnEditContact);
             this.Controls.Add(this.btnAddNew);
@@ -214,5 +247,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DateOfBirth;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sex;
         private System.Windows.Forms.DataGridViewTextBoxColumn PhoneNumber;
+        private System.Windows.Forms.ProgressBar pBar1;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }

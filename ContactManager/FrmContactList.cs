@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ContactManager
 {
@@ -23,7 +24,16 @@ namespace ContactManager
         {
             if (!File.Exists(Global.JsonLocation))
             {
-                CreateJsonFile();
+                try
+                {
+                    CreateJsonFile();
+                }
+                catch (Exception e)
+                {
+                    new FrmMessageBox("Application will close! \n Error: " + e.Message).ShowDialog();
+                    Application.Exit();
+                
+                }
             }
         }
 
@@ -58,8 +68,21 @@ namespace ContactManager
 
         public async void GetContacts()
         {
+            ClearGrid();
+            pBar1.Visible = true;
+            pBar1.Value = 60;
             _contactListLoad = await Task.Run(() => DM._dataManager.GetDataAsync());
+            pBar1.Value = 100;
+            await Task.Delay(500);
+            pBar1.Visible = false;
+
             FillGrid();
+           
+        }
+
+        private void ClearGrid()
+        {
+            grdContactList.Rows.Clear();
         }
 
         private  void btnAddNew_Click(object sender, EventArgs e)
@@ -74,7 +97,12 @@ namespace ContactManager
 
         private  void btnEditContact_Click(object sender, EventArgs e)
         {
-            ContactModel contact = GetContactFromRow();
+            (ContactModel contact, bool success) = GetContactFromRow();
+
+            if (!success)
+            {
+                return;
+            }
             FrmModifyContact frm = new FrmModifyContact(contact);
             frm.ShowDialog();
             if (!frm.isSaved)
@@ -83,25 +111,43 @@ namespace ContactManager
             GetContacts();
         }
 
-        private ContactModel GetContactFromRow()
+        private (ContactModel contact, bool success) GetContactFromRow()
         {
             ContactModel contact = new ContactModel();
             DataGridViewRow selectedRow = grdContactList.CurrentRow;
 
+            if (selectedRow == null)
+            {
+                new FrmMessageBox("No contact is selected!").ShowDialog();
+                return (contact, false);
+            }
+
             int selectedId = (int)selectedRow.Cells["Id"].Value;
             contact = _contactListLoad.FirstOrDefault(c => c.Id == selectedId);
 
-            return contact;
+            return (contact,true);
         }
 
         private async void btnDeleteContact_Click(object sender, EventArgs e)
         {
-            ContactModel contact = GetContactFromRow();
+            FrmMessageBox frm = new FrmMessageBox(MessageBoxButtons.YesNo, "Do you want to delete contact?");
+            frm.ShowDialog();
+
+            if (!frm.IsConfirmed)
+                return;
+
+            (ContactModel contact, bool success) = GetContactFromRow();
+            if (!success)
+                return;
             ResponseModel result = await DM._dataManager.DeleteDataAsync(contact);
             new FrmMessageBox(result.Message).ShowDialog();
 
             GetContacts();
         }
 
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            GetContacts();
+        }
     }
 }

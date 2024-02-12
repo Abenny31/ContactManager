@@ -56,12 +56,19 @@ namespace ContactManager.Models
 
         private void ShowList()
         {
+            List<string> numbers=new List<string>();
             panelNumbers.Controls.Clear();
-            if (_PhoneNumbers != null && _PhoneNumbers.Count > 0)
+            if (_contactSaved.PhoneNumbers != null && _contactSaved.PhoneNumbers.Count > 0)
+                numbers = new List<string>(_contactSaved.PhoneNumbers);
+            else if (_PhoneNumbers != null && _PhoneNumbers.Count > 0)
+                numbers = new List<string>(_PhoneNumbers);
+
+            if (numbers != null && numbers.Count > 0)
             {
+                _PhoneNumbers = numbers;
                 panelNumbers.Controls.Clear();
-                for (int i = 0; i < _PhoneNumbers.Count; i++)
-                    CreateLabel(_PhoneNumbers[i], i);
+                for (int i = 0; i < numbers.Count; i++)
+                    CreateLabel(numbers[i], i);
             }
         }
 
@@ -89,7 +96,7 @@ namespace ContactManager.Models
 
         private void btnPhoneNumber_Click(object sender, EventArgs e)
         {
-            FrmPhoneNumbers frm = new FrmPhoneNumbers(_PhoneNumbers);
+            FrmPhoneNumbers frm = new FrmPhoneNumbers(new List<string>(_PhoneNumbers));
             frm.ShowDialog();
 
             if (frm.isSaved)
@@ -125,7 +132,7 @@ namespace ContactManager.Models
                 }
                 else
                 {
-                    new FrmMessageBox(MessageBoxButtons.OK, "No changes where made").ShowDialog();
+                    new FrmMessageBox(MessageBoxButtons.OK, "No changes were made").ShowDialog();
                     return;
                 }
 
