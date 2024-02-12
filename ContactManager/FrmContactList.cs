@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ContactManager
 {
@@ -58,8 +59,21 @@ namespace ContactManager
 
         public async void GetContacts()
         {
+            ClearGrid();
+            pBar1.Visible = true;
+            pBar1.Value = 60;
             _contactListLoad = await Task.Run(() => DM._dataManager.GetDataAsync());
+            pBar1.Value = 100;
+            await Task.Delay(500);
+            pBar1.Visible = false;
+
             FillGrid();
+           
+        }
+
+        private void ClearGrid()
+        {
+            grdContactList.Rows.Clear();
         }
 
         private  void btnAddNew_Click(object sender, EventArgs e)
@@ -107,6 +121,12 @@ namespace ContactManager
 
         private async void btnDeleteContact_Click(object sender, EventArgs e)
         {
+            FrmMessageBox frm = new FrmMessageBox(MessageBoxButtons.YesNo, "Do you want to delete contact?");
+            frm.ShowDialog();
+
+            if (!frm.IsConfirmed)
+                return;
+
             (ContactModel contact, bool success) = GetContactFromRow();
             if (!success)
                 return;
@@ -116,5 +136,9 @@ namespace ContactManager
             GetContacts();
         }
 
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            GetContacts();
+        }
     }
 }
