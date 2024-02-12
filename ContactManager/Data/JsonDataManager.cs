@@ -29,12 +29,11 @@ namespace ContactManager.Data
         }
         public async Task<List<ContactModel>> GetDataAsync()
         {
-            List<ContactModel> list = new List<ContactModel>();
             string jsonData = await Task.Run(() => LoadJsonFromFile(Global.JsonLocation));
             if (jsonData != "" && jsonData != null)
-                list = JsonConvert.DeserializeObject<List<ContactModel>>(jsonData);
+                return JsonConvert.DeserializeObject<List<ContactModel>>(jsonData);
 
-            return list;
+            return new List<ContactModel>() ;
         }
         public async Task<ResponseModel> ModifyDataAsync(ContactModel contact)
         {

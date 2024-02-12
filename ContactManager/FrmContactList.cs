@@ -24,7 +24,16 @@ namespace ContactManager
         {
             if (!File.Exists(Global.JsonLocation))
             {
-                CreateJsonFile();
+                try
+                {
+                    CreateJsonFile();
+                }
+                catch (Exception e)
+                {
+                    new FrmMessageBox("Application will close! \n Error: " + e.Message).ShowDialog();
+                    Application.Exit();
+                
+                }
             }
         }
 
